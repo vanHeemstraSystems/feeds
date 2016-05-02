@@ -7,13 +7,46 @@
 // var EventEmitter = require('events').EventEmitter;
 // var util = require(__dirname+'/util.js');
 
+var self = this; // set the context locally, for access protection
+
 function Feed(feed, model) {
+  console.log('feeds feed - Feed called');
+  // add key value pairs here
+  // self's are not directly publicly accessible, only through their public method(s)
+  // use self's here for protection from direct access
+  self._promise = {};   // will be set, before passing on to mapping
+  self._event = {};   // will be set, before passing on to mapping
+  self._utility = {};   // will be set, before passing on to mapping
   this.feed = feed;
   this.model = model;
   this._closed = false;
 
   this.each = this._each;
   this.next = this._next;
+}
+
+Feed.prototype.promise = function() {
+  return self._promise;
+}
+
+Feed.prototype.setpromise = function(fnOrValue) {
+  self._promise = fnOrValue;
+}
+
+Feed.prototype.event = function() {
+  return self._event;
+}
+
+Feed.prototype.setevent = function(fnOrValue) {
+  self._event = fnOrValue;
+}
+
+Feed.prototype.utility = function() {
+  return self._utility;
+}
+
+Feed.prototype.setutility = function(fnOrValue) {
+  self._utility = fnOrValue;
 }
 
 Feed.prototype.toString = function() {
